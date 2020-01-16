@@ -4,10 +4,15 @@ import "./App.css";
 import AddMovie from "./AddMovie/AddMovie.js";
 import Search from "./SearchBar/Search.js";
 import RatingSearch from "./Search_by_Rating/RatingSearch";
+import HocLoader from './HocLoader/HocLoader.js'
 
-export default class App extends Component {
+
+
+ export default  class App extends Component {
+  
   state = {
     filters: "",
+    loading:true,
     rate: 0,
     ListMovie: [
       {
@@ -90,7 +95,9 @@ export default class App extends Component {
 
     show: false
   };
-
+componentDidMount=()=>{
+  setTimeout(()=>{this.setState({loading:false} ) },2000)
+}
   handleAdd = movie => {
     this.setState({
       ListMovie: [...this.state.ListMovie, movie]
@@ -117,6 +124,7 @@ export default class App extends Component {
     this.setState({ rate: rates });
   };
 
+ 
   render() {
     return (
       <div>
@@ -127,7 +135,7 @@ export default class App extends Component {
             rate={this.state.rate}
           />
         </div>
-        <MovieList List={this.state} />
+        <MovieList List={this.state} loading={this.state.loading} />
         <button className="addButt" onClick={this.showModal}>  Add new movie
        
         </button>
@@ -140,3 +148,4 @@ export default class App extends Component {
     );
   }
 }
+
